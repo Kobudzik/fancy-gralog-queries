@@ -18,7 +18,6 @@ function QueryListItem({ item, index, onPropertyChanged, onToggleJoinCondition, 
             </Button>
             <Button
                 onClick={() => onToggleReverse(index)}
-                disabled={item.reversed === 0}
                 variant={item.reversed ? "danger" : "success"}
                 className="me-2"
                 style={{ width: "90px", position: "relative" }}
