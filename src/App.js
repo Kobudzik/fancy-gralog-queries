@@ -4,12 +4,12 @@ import QueryGenerator from "./components/QueryGenerator/QueryGenerator.js";
 import * as myScripts from "./scripts/myScripts.js";
 
 function App() {
-  myScripts.DoTheThang();
-  return (
-    <div className="App">
-      <QueryGenerator />
-    </div>
-  );
+    myScripts.DoTheThang();
+    return (
+        <div className="App">
+            <QueryGenerator />
+        </div>
+    );
 }
 
 export default App;
