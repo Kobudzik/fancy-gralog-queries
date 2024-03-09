@@ -1,4 +1,6 @@
 import { Button, InputGroup, FormControl } from "react-bootstrap";
+import { BsArrowClockwise } from "react-icons/bs";
+import { IoMdRemove } from "react-icons/io";
 
 function QueryListItem({ item, index, onPropertyChanged, onToggleJoinCondition, onToggleReverse, onRemoveItem }) {
     return (
@@ -7,20 +9,24 @@ function QueryListItem({ item, index, onPropertyChanged, onToggleJoinCondition, 
                 onClick={() => onToggleJoinCondition(index)}
                 variant="secondary"
                 className="me-2"
-                style={{ width: "90px", visibility: index === 0 ? "hidden" : "visible" }}
+                style={{ width: "90px", visibility: index === 0 ? "hidden" : "visible", position: "relative" }}
                 title="Condition"
             >
                 {item.condition}
+                <BsArrowClockwise style={{ position: "absolute", top: 0, right: 0, fontSize: "0.8em" }} size={12} />
             </Button>
             <Button
                 onClick={() => onToggleReverse(index)}
                 disabled={item.reversed === 0}
                 variant={item.reversed ? "danger" : "success"}
                 className="me-2"
-                style={{ width: "90px" }}
+                style={{ width: "90px", position: "relative" }}
                 title="Is reversed"
             >
-                {item.reversed ? "NOT" : "\u00A0"}
+                <span>
+                    {item.reversed ? "NOT" : "\u00A0"}
+                    <BsArrowClockwise style={{ position: "absolute", top: 0, right: 0, fontSize: "0.8em" }} size={12} />
+                </span>
             </Button>
             <InputGroup>
                 <FormControl
@@ -39,8 +45,8 @@ function QueryListItem({ item, index, onPropertyChanged, onToggleJoinCondition, 
                     title="Value"
                 />
             </InputGroup>
-            <Button onClick={() => onRemoveItem(index)} title="Remove" variant="warning" className="ms-2">
-                Remove
+            <Button onClick={() => onRemoveItem(index)} title="Remove" variant="warning" className="mx-1">
+                <IoMdRemove />
             </Button>
         </div>
     );
