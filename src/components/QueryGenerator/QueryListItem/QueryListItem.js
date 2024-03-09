@@ -20,14 +20,16 @@ function QueryListItem({ item, index, onPropertyChanged, onToggleJoinCondition, 
                 onClick={() => onToggleReverse(index)}
                 variant={item.reversed ? "danger" : "success"}
                 className="me-2"
-                style={{ width: "90px", position: "relative" }}
+                style={{
+                    width: "90px",
+                    position: "relative",
+                }}
                 title="Is reversed"
             >
-                <span>
+                <span style={{ color: !item.reversed && "darkgray", fontStyle: !item.reversed && "italic" }}>
                     {item.reversed ? "IS NOT" : "IS"}
-                    {/* \u00A0 */}
-                    <BsArrowClockwise style={{ position: "absolute", top: 0, right: 0, fontSize: "0.8em" }} size={12} />
                 </span>
+                <BsArrowClockwise style={{ position: "absolute", top: 0, right: 0, fontSize: "0.8em" }} size={12} />
             </Button>
             <InputGroup>
                 <FormControl
