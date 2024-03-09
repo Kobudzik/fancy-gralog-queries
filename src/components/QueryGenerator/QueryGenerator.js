@@ -4,7 +4,7 @@ import "./QueryGenerator.css";
 import QueryListItem from "./QueryListItem/QueryListItem";
 import { FaPlus } from "react-icons/fa6";
 import { FaArrowUp, FaArrowDown } from "react-icons/fa";
-import * as QueryManager from "./GraylogQueryManager";
+import * as QueryManager from "./GraylogQueryManager/GraylogQueryManager";
 
 function QueryGenerator() {
     const [items, setItems] = useState([{ field: "", value: "", condition: null, reversed: false }]);
@@ -94,16 +94,16 @@ function QueryGenerator() {
                 />
             ))}
             <div style={{ display: "flex", justifyContent: "flex-end" }}>
-                <Button onClick={addNewItem} variant="primary" className="mx-1">
+                <Button data-testid="add-button" onClick={addNewItem} variant="primary" className="mx-1">
                     <FaPlus />
                 </Button>
             </div>
             <div className="d-flex flex-column gap-1 mt-5">
-                <Button onClick={extractQuery} variant="success">
+                <Button data-testid="extract-query-button" onClick={extractQuery} variant="success">
                     <FaArrowUp className="mx-1" />
                     Extract Query
                 </Button>
-                <Button onClick={importQuery} variant="info">
+                <Button data-testid="import-query-button" onClick={importQuery} variant="info">
                     <FaArrowDown className="mx-1" />
                     Import Query
                 </Button>
