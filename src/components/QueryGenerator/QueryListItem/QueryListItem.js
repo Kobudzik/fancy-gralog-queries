@@ -24,7 +24,8 @@ function QueryListItem({ item, index, onPropertyChanged, onToggleJoinCondition, 
                 title="Is reversed"
             >
                 <span>
-                    {item.reversed ? "NOT" : "\u00A0"}
+                    {item.reversed ? "IS NOT" : "IS"}
+                    {/* \u00A0 */}
                     <BsArrowClockwise style={{ position: "absolute", top: 0, right: 0, fontSize: "0.8em" }} size={12} />
                 </span>
             </Button>

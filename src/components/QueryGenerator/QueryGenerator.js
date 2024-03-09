@@ -3,6 +3,7 @@ import { Button } from "react-bootstrap";
 import "./QueryGenerator.css";
 import QueryListItem from "./QueryListItem/QueryListItem";
 import { FaPlus } from "react-icons/fa6";
+import { FaArrowUp, FaArrowDown } from "react-icons/fa";
 
 function QueryGenerator() {
     const [items, setItems] = useState([{ field: "", value: "", condition: null, reversed: false }]);
@@ -140,15 +141,17 @@ function QueryGenerator() {
                 />
             ))}
             <div style={{ display: "flex", justifyContent: "flex-end" }}>
-                <Button onClick={addNewItem} variant="primary" style={{ width: "90px" }} className="mx-1">
+                <Button onClick={addNewItem} variant="primary" className="mx-1">
                     <FaPlus />
                 </Button>
             </div>
             <div className="d-flex flex-column gap-1 mt-5">
                 <Button onClick={extractQuery} variant="success">
+                    <FaArrowUp className="mx-1" />
                     Extract Query
                 </Button>
                 <Button onClick={importQuery} variant="info">
+                    <FaArrowDown className="mx-1" />
                     Import Query
                 </Button>
             </div>
