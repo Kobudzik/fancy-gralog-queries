@@ -4,6 +4,7 @@ import "./QueryGenerator.css";
 import QueryListItem from "./QueryListItem/QueryListItem";
 import { FaPlus } from "react-icons/fa6";
 import { FaArrowUp, FaArrowDown } from "react-icons/fa";
+import * as QueryManager from "./GraylogQueryManager";
 
 function QueryGenerator() {
     const [items, setItems] = useState([{ field: "", value: "", condition: null, reversed: false }]);
@@ -54,7 +55,6 @@ function QueryGenerator() {
     };
 
     const extractQuery = () => {
-        //validation
         for (const item of items) {
             if (!item.field || !item.value) {
                 alert("Please fill in all fields before extracting data.");
@@ -62,62 +62,15 @@ function QueryGenerator() {
             }
         }
 
-        const extractedData = items.reduce((result, item) => {
-            //if result exists aka not the first item iteration
-            if (result) {
-                result += ` ${item.condition} `;
-            }
-
-            if (item.reversed === true) {
-                result += "NOT ";
-            }
-
-            return result + `${item.field}:${item.value}`;
-        }, "");
-
-        console.log(extractedData);
+        var result = QueryManager.extractGraylogQuery(items);
+        console.log(result);
     };
 
     const importQuery = () => {
         const query = prompt("Enter query:");
         if (!query) return;
 
-        const itemList = [];
-
-        query.split(/(?=OR|AND)/).forEach((item, index) => {
-            let condition = null;
-            let isReversed = false;
-            let trimmedItem = item.trim();
-
-            if (trimmedItem.indexOf("NOT ") > -1) {
-                isReversed = true;
-                trimmedItem = trimmedItem.replace("NOT ", "");
-            }
-
-            if (trimmedItem.indexOf("OR ") > -1) {
-                condition = "OR";
-                trimmedItem = trimmedItem.replace("OR ", "");
-            } else if (trimmedItem.indexOf("AND ") > -1) {
-                condition = "AND";
-                trimmedItem = trimmedItem.replace("AND ", "");
-            } else if (index !== 0 && condition == null) {
-                alert("Invalid query format, unexpected AND/OR marker");
-            }
-
-            const parts = trimmedItem.split(":");
-
-            if (parts.length !== 2) {
-                alert("Invalid query format. Each condition must be in field:value format.");
-                return;
-            }
-
-            itemList.push({
-                field: parts[0].trim(),
-                value: parts[1].trim(),
-                condition: condition,
-                reversed: isReversed,
-            });
-        });
+        var itemList = QueryManager.importGraylogQuery(query);
 
         if (itemList.length === 0) {
             alert("Invalid query format. The query must contain at least one condition (OR/AND) separating field:value pairs.");
