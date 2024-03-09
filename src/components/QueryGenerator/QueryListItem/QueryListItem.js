@@ -35,6 +35,7 @@ function QueryListItem({ item, index, onPropertyChanged, onToggleJoinCondition, 
                     type="text"
                     placeholder="Field"
                     title="Field"
+                    style={{ maxWidth: "15rem" }}
                 />
                 <InputGroup.Text>:</InputGroup.Text>
                 <FormControl

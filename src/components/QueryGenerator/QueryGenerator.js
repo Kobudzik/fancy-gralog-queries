@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Button } from "react-bootstrap";
 import "./QueryGenerator.css";
 import QueryListItem from "./QueryListItem/QueryListItem";
+import { FaPlus } from "react-icons/fa6";
 
 function QueryGenerator() {
     const [items, setItems] = useState([{ field: "", value: "", condition: null, reversed: false }]);
@@ -126,7 +127,7 @@ function QueryGenerator() {
     };
 
     return (
-        <div className="list-container">
+        <div className="">
             {items.map((item, index) => (
                 <QueryListItem
                     key={index}
@@ -138,15 +139,19 @@ function QueryGenerator() {
                     onRemoveItem={removeItem}
                 />
             ))}
-            <Button onClick={addNewItem} variant="primary" className="mb-2">
-                Add
-            </Button>
-            <Button onClick={extractQuery} variant="success" className="mb-2">
-                Extract Query
-            </Button>
-            <Button onClick={importQuery} variant="info">
-                Import Query
-            </Button>
+            <div style={{ display: "flex", justifyContent: "flex-end" }}>
+                <Button onClick={addNewItem} variant="primary" style={{ width: "90px" }} className="mx-1">
+                    <FaPlus />
+                </Button>
+            </div>
+            <div className="d-flex flex-column gap-1 mt-5">
+                <Button onClick={extractQuery} variant="success">
+                    Extract Query
+                </Button>
+                <Button onClick={importQuery} variant="info">
+                    Import Query
+                </Button>
+            </div>
         </div>
     );
 }
