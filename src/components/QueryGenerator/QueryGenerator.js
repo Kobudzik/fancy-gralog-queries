@@ -8,11 +8,11 @@ import * as QueryManager from "./GraylogQueryManager/GraylogQueryManager";
 import { ToastContainer, toast } from "react-toastify";
 
 function QueryGenerator() {
-    const [items, setItems] = useState([{ field: "", value: "", condition: null, reversed: false }]);
+    let defaultEmptyRowData = { field: "", value: "", condition: "AND", reversed: false, disabled: false };
+
+    const [items, setItems] = useState([defaultEmptyRowData]);
 
     const addNewItem = () => {
-        let defaultEmptyRowData = { field: "", value: "", condition: "AND", reversed: false };
-
         if (items.length === 0) {
             setItems([defaultEmptyRowData]);
             return;
@@ -49,6 +49,12 @@ function QueryGenerator() {
         setItems(updatedItems);
     };
 
+    const toggleDisable = (index) => {
+        const updatedItems = [...items];
+        updatedItems[index].disabled = !updatedItems[index].disabled;
+        setItems(updatedItems);
+    };
+
     const removeItem = (index) => {
         const updatedItems = [...items];
         updatedItems.splice(index, 1);
@@ -61,6 +67,10 @@ function QueryGenerator() {
                 toast("Please fill in all fields before extracting data.");
                 return;
             }
+        }
+
+        if (items.filter((x) => !x.disabled).length === 0) {
+            toast("There are zero enabled rows!");
         }
 
         var result = QueryManager.extractGraylogQuery(items);
@@ -77,7 +87,9 @@ function QueryGenerator() {
 
         var itemList = QueryManager.importGraylogQuery(query);
 
-        setItems(itemList);
+        if (itemList.length > 0) {
+            setItems(itemList);
+        }
     };
 
     return (
@@ -91,6 +103,7 @@ function QueryGenerator() {
                     onPropertyChanged={handlePropertyValueChange}
                     onToggleJoinCondition={toggleJoinCondition}
                     onToggleReverse={toggleReverse}
+                    onToggleDisable={toggleDisable}
                     onRemoveItem={removeItem}
                 />
             ))}

@@ -2,8 +2,21 @@ import React from "react";
 import { Button, InputGroup, FormControl } from "react-bootstrap";
 import { BsArrowClockwise } from "react-icons/bs";
 import { IoMdRemove } from "react-icons/io";
+import { LiaToggleOffSolid, LiaToggleOnSolid } from "react-icons/lia";
 
-function QueryListItem({ item, index, onPropertyChanged, onToggleJoinCondition, onToggleReverse, onRemoveItem }) {
+function QueryListItem({
+    item,
+    index,
+    onPropertyChanged,
+    onToggleJoinCondition,
+    onToggleReverse,
+    onRemoveItem,
+    onToggleDisable,
+}) {
+    let generateCircleIcon = () => {
+        return <BsArrowClockwise style={{ position: "absolute", top: 0, right: 0, fontSize: "0.8em" }} size={12} />;
+    };
+
     return (
         <div className="list-item">
             <Button
@@ -12,9 +25,10 @@ function QueryListItem({ item, index, onPropertyChanged, onToggleJoinCondition, 
                 className="me-2"
                 style={{ width: "90px", visibility: index === 0 ? "hidden" : "visible", position: "relative" }}
                 title="Condition"
+                disabled={item.disabled}
             >
                 {item.condition}
-                <BsArrowClockwise style={{ position: "absolute", top: 0, right: 0, fontSize: "0.8em" }} size={12} />
+                {generateCircleIcon()}
             </Button>
             <Button
                 onClick={() => onToggleReverse(index)}
@@ -25,11 +39,12 @@ function QueryListItem({ item, index, onPropertyChanged, onToggleJoinCondition, 
                     position: "relative",
                 }}
                 title="Is reversed"
+                disabled={item.disabled}
             >
                 <span style={{ color: !item.reversed && "darkgray", fontStyle: !item.reversed && "italic" }}>
                     {item.reversed ? "IS NOT" : "IS"}
                 </span>
-                <BsArrowClockwise style={{ position: "absolute", top: 0, right: 0, fontSize: "0.8em" }} size={12} />
+                {generateCircleIcon()}
             </Button>
             <InputGroup>
                 <FormControl
@@ -39,6 +54,7 @@ function QueryListItem({ item, index, onPropertyChanged, onToggleJoinCondition, 
                     placeholder="Field"
                     title="Field"
                     style={{ maxWidth: "15rem" }}
+                    disabled={item.disabled}
                 />
                 <InputGroup.Text>:</InputGroup.Text>
                 <FormControl
@@ -47,10 +63,19 @@ function QueryListItem({ item, index, onPropertyChanged, onToggleJoinCondition, 
                     type="text"
                     placeholder="Value"
                     title="Value"
+                    disabled={item.disabled}
                 />
             </InputGroup>
             <Button onClick={() => onRemoveItem(index)} title="Remove" variant="danger" className="mx-1">
                 <IoMdRemove />
+            </Button>
+            <Button
+                onClick={() => onToggleDisable(index)}
+                title="Disable"
+                variant={item.disabled ? "primary" : "danger"}
+                className="mx-1"
+            >
+                {item.disabled ? <LiaToggleOffSolid /> : <LiaToggleOnSolid />}
             </Button>
         </div>
     );

@@ -86,6 +86,20 @@ describe("extractGraylogQuery", () => {
         // Assert
         expect(result).toBe("field1:value1 OR field2:value2 AND field3:value3 OR field4:value4");
     });
+
+    test("skips disabled items", () => {
+        // Arrange
+        const items = [
+            { field: "field1", value: "value1", condition: null, reversed: false, disabled: false },
+            { field: "field2", value: "value2", condition: "OR", reversed: false, disabled: true },
+        ];
+
+        // Act
+        const result = extractGraylogQuery(items);
+
+        // Assert
+        expect(result).toBe("field1:value1");
+    });
 });
 
 jest.mock("react-toastify", () => ({

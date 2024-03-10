@@ -3,11 +3,16 @@ import "@testing-library/jest-dom";
 import { render, fireEvent, screen } from "@testing-library/react";
 import QueryGenerator from "./QueryGenerator";
 import * as QueryManager from "./GraylogQueryManager/GraylogQueryManager";
+import { toast } from "react-toastify";
 
 describe("QueryGenerator", () => {
     beforeEach(() => {
         jest.spyOn(QueryManager, "extractGraylogQuery").mockReturnValue("");
         jest.spyOn(QueryManager, "importGraylogQuery").mockReturnValue([]);
+        jest.mock("react-toastify", () => ({
+            __esModule: true,
+            toast: jest.fn().mockReturnValue(null),
+        }));
     });
 
     afterEach(() => {
@@ -56,6 +61,20 @@ describe("QueryGenerator", () => {
 
         //assert
         expect(QueryManager.extractGraylogQuery).toHaveBeenCalled();
+    });
+
+    test("extract query- toasts when no enabled rows", () => {
+        //arrange
+        render(<QueryGenerator />);
+        fireEvent.change(screen.getByPlaceholderText("Field"), { target: { value: "testField" } });
+        fireEvent.change(screen.getByPlaceholderText("Value"), { target: { value: "testValue" } });
+
+        //act
+        fireEvent.click(screen.getByTitle("Disable"));
+        fireEvent.click(screen.getByTestId("extract-query-button"));
+
+        //assert
+        expect(toast).toHaveBeenCalledWith("There are zero enabled rows!");
     });
 
     test("imports query when Import Query button is clicked", () => {

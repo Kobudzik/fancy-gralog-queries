@@ -53,6 +53,20 @@ describe("QueryListItem tests", () => {
         expect(onToggleReverse).toHaveBeenCalledWith(itemIndex);
     });
 
+    it("calls onToggleDisable when the reverse button is clicked", () => {
+        //arrange
+        const onToggleDisable = jest.fn();
+        const itemIndex = 7;
+        render(<QueryListItem item={mockItem} index={itemIndex} onToggleDisable={onToggleDisable} />);
+
+        //act
+        fireEvent.click(screen.getByTitle("Disable"));
+
+        //assert
+        expect(onToggleDisable).toHaveBeenCalledTimes(1);
+        expect(onToggleDisable).toHaveBeenCalledWith(itemIndex);
+    });
+
     it("calls onRemoveItem when the remove button is clicked", () => {
         //arrange
         const onRemoveItem = jest.fn();

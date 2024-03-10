@@ -2,18 +2,20 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 export const extractGraylogQuery = (items) => {
-    return items.reduce((result, item) => {
-        //if result exists aka not the first item iteration
-        if (result) {
-            result += ` ${item.condition} `;
-        }
+    return items
+        .filter((x) => !x.disabled)
+        .reduce((result, item) => {
+            //if result exists aka not the first item iteration
+            if (result) {
+                result += ` ${item.condition} `;
+            }
 
-        if (item.reversed === true) {
-            result += "NOT ";
-        }
+            if (item.reversed === true) {
+                result += "NOT ";
+            }
 
-        return result + `${item.field}:${item.value}`;
-    }, "");
+            return result + `${item.field}:${item.value}`;
+        }, "");
 };
 
 export const importGraylogQuery = (query) => {
