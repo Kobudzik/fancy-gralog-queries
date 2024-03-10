@@ -1,3 +1,6 @@
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 export const extractGraylogQuery = (items) => {
     return items.reduce((result, item) => {
         //if result exists aka not the first item iteration
@@ -33,13 +36,14 @@ export const importGraylogQuery = (query) => {
             condition = "AND";
             trimmedItem = trimmedItem.replace("AND ", "");
         } else if (index !== 0 && condition == null) {
-            alert("Invalid query format, unexpected AND/OR marker");
+            toast("Invalid query format, unexpected AND/OR marker.");
+            return;
         }
 
         const parts = trimmedItem.split(":");
 
         if (parts.length !== 2) {
-            alert("Invalid query format. Each condition must be in field:value format.");
+            toast("Invalid query format. Each condition must be in field:value format.");
             return;
         }
 

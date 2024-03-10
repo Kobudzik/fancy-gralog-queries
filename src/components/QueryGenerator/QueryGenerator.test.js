@@ -6,7 +6,6 @@ import * as QueryManager from "./GraylogQueryManager/GraylogQueryManager";
 
 describe("QueryGenerator", () => {
     beforeEach(() => {
-        jest.spyOn(window, "alert").mockImplementation(() => {});
         jest.spyOn(QueryManager, "extractGraylogQuery").mockReturnValue("");
         jest.spyOn(QueryManager, "importGraylogQuery").mockReturnValue([]);
     });

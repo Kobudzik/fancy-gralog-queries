@@ -96,7 +96,7 @@ describe("QueryListItem tests", () => {
         expect(screen.getByText("IS NOT")).toBeInTheDocument();
     });
 
-    it("renders properly with different item properties: AND not reversed", () => {
+    it("renders properly with different item properties: AND, not reversed", () => {
         //arrange
         render(<QueryListItem item={{ ...mockItem, condition: "AND", reversed: false }} index={0} />);
 

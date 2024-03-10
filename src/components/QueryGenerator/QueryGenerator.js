@@ -5,6 +5,7 @@ import QueryListItem from "./QueryListItem/QueryListItem";
 import { FaPlus } from "react-icons/fa6";
 import { FaArrowUp, FaArrowDown } from "react-icons/fa";
 import * as QueryManager from "./GraylogQueryManager/GraylogQueryManager";
+import { ToastContainer, toast } from "react-toastify";
 
 function QueryGenerator() {
     const [items, setItems] = useState([{ field: "", value: "", condition: null, reversed: false }]);
@@ -20,7 +21,7 @@ function QueryGenerator() {
         //validate if can add
         const lastItem = items[items.length - 1];
         if (!lastItem.field || !lastItem.value) {
-            alert("Please fill in the previous row before adding a new one.");
+            toast("Please fill in the previous row before adding a new one.");
             return;
         }
 
@@ -57,7 +58,7 @@ function QueryGenerator() {
     const extractQuery = () => {
         for (const item of items) {
             if (!item.field || !item.value) {
-                alert("Please fill in all fields before extracting data.");
+                toast("Please fill in all fields before extracting data.");
                 return;
             }
         }
@@ -68,20 +69,20 @@ function QueryGenerator() {
 
     const importQuery = () => {
         const query = prompt("Enter query:");
-        if (!query) return;
 
-        var itemList = QueryManager.importGraylogQuery(query);
-
-        if (itemList.length === 0) {
-            alert("Invalid query format. The query must contain at least one condition (OR/AND) separating field:value pairs.");
+        if (!query) {
+            toast("Provide a query!");
             return;
         }
+
+        var itemList = QueryManager.importGraylogQuery(query);
 
         setItems(itemList);
     };
 
     return (
         <div className="">
+            <ToastContainer theme="dark" progressStyle={{ backgroundColor: "#d62518" }} />
             {items.map((item, index) => (
                 <QueryListItem
                     key={index}

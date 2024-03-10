@@ -14,3 +14,8 @@ $secondary: #2c2c2ca8;
 // $dark: #343a40;
 
 @import '~bootstrap/scss/bootstrap.scss';
+
+:root{
+    --toastify-color-progress-dark: red;
+}
+@import "react-toastify/dist/ReactToastify.css";

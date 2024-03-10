@@ -1,4 +1,5 @@
 import { extractGraylogQuery, importGraylogQuery } from "./GraylogQueryManager";
+import { toast } from "react-toastify";
 
 describe("extractGraylogQuery", () => {
     test("returns an empty string when provided with an empty array", () => {
@@ -87,6 +88,10 @@ describe("extractGraylogQuery", () => {
     });
 });
 
+jest.mock("react-toastify", () => ({
+    toast: jest.fn(),
+}));
+
 describe("importGraylogQuery", () => {
     test("returns an empty array when provided with an empty query", () => {
         // Arrange
@@ -114,7 +119,7 @@ describe("importGraylogQuery", () => {
         ]);
     });
 
-    test("handles invalid query formats by returning an empty array", () => {
+    test("handles invalid query format by returning an empty array: not k:v format", () => {
         // Arrange
         const query = "invalid query";
 
@@ -123,5 +128,27 @@ describe("importGraylogQuery", () => {
 
         // Assert
         expect(result).toEqual([]);
+    });
+
+    test("handles invalid query format by alerting: not k:v format", () => {
+        // Arrange
+        const query = "invalid query";
+
+        // Act
+        importGraylogQuery(query);
+
+        // Assert
+        expect(toast).toHaveBeenCalledWith("Invalid query format. Each condition must be in field:value format.");
+    });
+
+    test("handles invalid query format by alerting: unexpeced and/or marker", () => {
+        // Arrange
+        const query = "test:value AND";
+
+        // Act
+        importGraylogQuery(query);
+
+        // Assert
+        expect(toast).toHaveBeenCalledWith("Invalid query format, unexpected AND/OR marker.");
     });
 });
