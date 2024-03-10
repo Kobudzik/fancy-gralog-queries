@@ -29,6 +29,12 @@ function QueryGenerator() {
     };
 
     const handlePropertyValueChange = (property, index, event) => {
+        if (property === "field") {
+            if (!/^[a-zA-Z0-9]*$/.test(event.target.value) || !event.target.value === "") {
+                return;
+            }
+        }
+
         const updatedItems = [...items];
         updatedItems[index] = {
             ...updatedItems[index],
@@ -62,15 +68,15 @@ function QueryGenerator() {
     };
 
     const extractQuery = () => {
+        if (items.filter((x) => !x.disabled).length === 0) {
+            toast("There are zero enabled rows!");
+        }
+
         for (const item of items) {
             if (!item.field || !item.value) {
                 toast("Please fill in all fields before extracting data.");
                 return;
             }
-        }
-
-        if (items.filter((x) => !x.disabled).length === 0) {
-            toast("There are zero enabled rows!");
         }
 
         var result = QueryManager.extractGraylogQuery(items);
