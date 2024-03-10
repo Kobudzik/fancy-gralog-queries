@@ -1,11 +1,13 @@
 {
     "manifest_version": 3,
-    "name": "Kobu",
+    "name": "Fancy graylog queries",
     "version": "1.0.0",
+    "permissions": ["activeTab"],
     "content_scripts": [
         {
-            "matches": ["https:.///"],
-            "js": ["script.js"]
+            "matches": ["<all_urls>"],
+            "js": ["static/js/main.js"],
+            "css": ["static/css/main.css"]
         }
     ]
 }
