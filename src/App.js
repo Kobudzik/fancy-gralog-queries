@@ -1,12 +1,9 @@
 import React, { useState } from "react";
 import "./App.scss";
 import QueryGenerator from "./components/QueryGenerator/QueryGenerator.js";
-import * as IntegrationScripts from "./scripts/IntegrationScripts.js";
 import { FaAnglesDown, FaAnglesUp } from "react-icons/fa6";
 
 function App() {
-    IntegrationScripts.DoTheThang();
-
     // State to manage whether the content is visible or not
     const [showContent, setShowContent] = useState(true);
 
@@ -16,7 +13,7 @@ function App() {
     };
 
     return (
-        <div className="App">
+        <div>
             {/* Floating icon */}
             <div className="floating-icon mb-3" onClick={toggleContent}>
                 <span style={{ fontFamily: "fantasy" }}>

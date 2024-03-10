@@ -1,5 +1,4 @@
-
-.btn {
+.btn, .form-control {
     border-radius: 0 !important;
 }
 
@@ -13,9 +12,13 @@ $secondary: #2c2c2ca8;
 // $light: #f8f9fa;
 // $dark: #343a40;
 
-@import '~bootstrap/scss/bootstrap.scss';
+@import '~bootstrap/scss/bootstrap';
 
 :root{
     --toastify-color-progress-dark: red;
 }
 @import "react-toastify/dist/ReactToastify.css";
+
+.eUsJRX {
+    height: auto !important;
+}

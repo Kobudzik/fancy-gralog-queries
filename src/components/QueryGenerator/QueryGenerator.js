@@ -6,6 +6,7 @@ import { FaPlus } from "react-icons/fa6";
 import { FaArrowUp, FaArrowDown } from "react-icons/fa";
 import * as QueryManager from "./GraylogQueryManager/GraylogQueryManager";
 import { ToastContainer, toast } from "react-toastify";
+import * as IntegrationScripts from "../../scripts/IntegrationScripts";
 
 function QueryGenerator() {
     let defaultEmptyRowData = { field: "", value: "", condition: "AND", reversed: false, disabled: false };
@@ -67,7 +68,7 @@ function QueryGenerator() {
         setItems(updatedItems);
     };
 
-    const extractQuery = () => {
+    const extractQueryFromItems = () => {
         if (items.filter((x) => !x.disabled).length === 0) {
             toast("There are zero enabled rows!");
         }
@@ -79,11 +80,11 @@ function QueryGenerator() {
             }
         }
 
-        var result = QueryManager.extractGraylogQuery(items);
-        console.log(result);
+        console.log(items);
+        return QueryManager.extractGraylogQuery(items);
     };
 
-    const importQuery = () => {
+    const importQueryFromString = () => {
         const query = prompt("Enter query:");
 
         if (!query) {
@@ -98,9 +99,29 @@ function QueryGenerator() {
         }
     };
 
+    const importQueryFromUrl = () => {
+        let query = IntegrationScripts.loadFromQuery();
+
+        if (!query) {
+            toast("There was nothing to import");
+            return;
+        }
+
+        var itemList = QueryManager.importGraylogQuery(query);
+        if (itemList.length > 0) {
+            setItems(itemList);
+        }
+    };
+
+    const pushQueryToUrl = () => {
+        let query = extractQueryFromItems();
+        if (!query) return;
+        IntegrationScripts.saveToQuery(query);
+    };
+
     return (
         <div className="">
-            <ToastContainer theme="dark" progressStyle={{ backgroundColor: "#d62518" }} />
+            <ToastContainer theme="dark" progressStyle={{ backgroundColor: "#d62518" }} position="bottom-center" />
             {items.map((item, index) => (
                 <QueryListItem
                     key={index}
@@ -119,13 +140,22 @@ function QueryGenerator() {
                 </Button>
             </div>
             <div className="d-flex flex-column gap-1 mt-5">
-                <Button data-testid="extract-query-button" onClick={extractQuery} variant="success">
+                <Button data-testid="extract-query-button" onClick={extractQueryFromItems} variant="success">
                     <FaArrowUp className="mx-1" />
                     Extract Query
                 </Button>
-                <Button data-testid="import-query-button" onClick={importQuery} variant="danger">
+                <Button data-testid="import-query-from-stringbutton" onClick={importQueryFromString} variant="danger">
                     <FaArrowDown className="mx-1" />
-                    Import Query
+                    Import from string
+                </Button>
+
+                <Button data-testid="import-query-from-url-button" onClick={importQueryFromUrl} variant="danger">
+                    <FaArrowDown className="mx-1" />
+                    Import from url
+                </Button>
+
+                <Button data-testid="import-query-from-url-button" onClick={pushQueryToUrl} variant="success">
+                    Use query
                 </Button>
             </div>
         </div>

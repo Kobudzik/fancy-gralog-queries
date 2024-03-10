@@ -28,5 +28,5 @@ function Rename-MainFiles {
 }
 
 # Example usage:
-Rename-MainFiles -FolderPath "./build/static/css"
+# Rename-MainFiles -FolderPath "./build/static/css"
 Rename-MainFiles -FolderPath "./build/static/js"

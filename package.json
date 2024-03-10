@@ -16,13 +16,17 @@
         "@testing-library/jest-dom": "^5.17.0",
         "@testing-library/react": "^13.4.0",
         "@testing-library/user-event": "^13.5.0",
-        "identity-obj-proxy": "^3.0.0"
+        "purify-css": "^1.2.5",
+        "source-map-explorer": "^2.5.3"
     },
     "scripts": {
         "start": "react-scripts start",
-        "build": "react-scripts build && powershell.exe -ExecutionPolicy Bypass -File buildRenamer.ps1",
+        "build": "react-scripts build && npm run purify-build-css && powershell.exe -ExecutionPolicy Bypass -File buildRenamer.ps1",
+        "simple-build": "react-scripts build",
+        "purify-build-css": "node ./node_modules/purify-css/bin/purifycss build/static/js/*.js build/static/css/*.css --out build/static/css/main.css --min true",
         "test": "react-scripts test",
-        "eject": "react-scripts eject"
+        "eject": "react-scripts eject",
+        "analyze": "source-map-explorer build/static/js/main.*"
     },
     "eslintConfig": {
         "extends": [

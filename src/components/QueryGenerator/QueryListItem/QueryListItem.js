@@ -18,7 +18,8 @@ function QueryListItem({
     };
 
     return (
-        <div className="list-item">
+        <div className="list-item eUsJRX">
+            {/* //dummy eusjrx usage to keep this class via purifycss */}
             <Button
                 onClick={() => onToggleJoinCondition(index)}
                 variant="secondary"
