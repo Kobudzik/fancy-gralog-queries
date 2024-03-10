@@ -22,5 +22,5 @@ function getQueryFromUrl(urlString) {
 // }
 
 function generateQueryFromArray(array) {
-    return array.join(" ");
+    return encodeURI(array.join(" "));
 }
