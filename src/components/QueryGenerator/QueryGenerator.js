@@ -94,7 +94,7 @@ function QueryGenerator() {
                 />
             ))}
             <div style={{ display: "flex", justifyContent: "flex-end" }}>
-                <Button data-testid="add-button" onClick={addNewItem} variant="primary" className="mx-1">
+                <Button data-testid="add-button" onClick={addNewItem} variant="success" className="mx-1">
                     <FaPlus />
                 </Button>
             </div>
@@ -103,7 +103,7 @@ function QueryGenerator() {
                     <FaArrowUp className="mx-1" />
                     Extract Query
                 </Button>
-                <Button data-testid="import-query-button" onClick={importQuery} variant="info">
+                <Button data-testid="import-query-button" onClick={importQuery} variant="danger">
                     <FaArrowDown className="mx-1" />
                     Import Query
                 </Button>

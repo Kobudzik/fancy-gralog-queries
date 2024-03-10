@@ -1,0 +1,16 @@
+
+.btn {
+    border-radius: 0 !important;
+}
+
+
+$success: #d62518;
+$danger: #343a40;
+$primary: #cecece80;
+$secondary: #2c2c2ca8;
+// $info: #7854e4;
+// $warning: #b8c924;
+// $light: #f8f9fa;
+// $dark: #343a40;
+
+@import '~bootstrap/scss/bootstrap.scss';

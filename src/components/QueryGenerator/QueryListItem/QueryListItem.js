@@ -21,7 +21,7 @@ function QueryListItem({ item, index, onPropertyChanged, onToggleJoinCondition, 
                 variant={item.reversed ? "danger" : "success"}
                 className="me-2"
                 style={{
-                    width: "90px",
+                    width: "100px",
                     position: "relative",
                 }}
                 title="Is reversed"
@@ -49,7 +49,7 @@ function QueryListItem({ item, index, onPropertyChanged, onToggleJoinCondition, 
                     title="Value"
                 />
             </InputGroup>
-            <Button onClick={() => onRemoveItem(index)} title="Remove" variant="warning" className="mx-1">
+            <Button onClick={() => onRemoveItem(index)} title="Remove" variant="danger" className="mx-1">
                 <IoMdRemove />
             </Button>
         </div>
