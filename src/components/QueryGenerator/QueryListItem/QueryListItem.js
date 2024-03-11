@@ -51,7 +51,7 @@ function QueryListItem({
                     disabled={item.disabled}
                     style={{ maxWidth: "10rem" }}
                 />
-                <span>:</span>
+                <span className="centered">:</span>
                 <TextareaAutosize
                     value={item.value || ""}
                     onChange={(event) => onPropertyChanged("value", index, event)}

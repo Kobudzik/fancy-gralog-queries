@@ -25,7 +25,7 @@ function App() {
 
             {/* Conditional rendering of content based on state */}
             {showContent && (
-                <div className="content">
+                <div className="app-content">
                     <QueryGenerator />
                 </div>
             )}

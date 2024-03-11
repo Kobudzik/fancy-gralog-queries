@@ -3,8 +3,9 @@ $danger: #343a40;
 $primary: #cecece80;
 $secondary: #2c2c2ca8;
 
-.content {
-    padding: 2rem;
+span.centered {
+    margin-top: auto;
+    margin-bottom: auto;
 }
 
 .list-item-row {
@@ -117,18 +118,24 @@ $secondary: #2c2c2ca8;
     }
 }
 
-.app-mr-2 {
-    margin-right: 0.5rem;
-}
+.app- {
+    &mr-2 {
+        margin-right: 0.5rem;
+    }
 
-.app-mt-2 {
-    margin-top: 0.5rem;
-}
+    &mt-2 {
+        margin-top: 0.5rem;
+    }
 
-.app-mt-5 {
-    margin-top: 3rem;
-}
+    &mt-5 {
+        margin-top: 3rem;
+    }
 
-.app-mr-1 {
-    margin-right: 0.25rem;
+    &mr-1 {
+        margin-right: 0.25rem;
+    }
+
+    &content {
+        padding: 2rem;
+    }
 }
