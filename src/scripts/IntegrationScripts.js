@@ -11,11 +11,10 @@ export function loadFromQuery() {
     return new URL(window.location.href).searchParams.get("q");
 }
 
-export function saveToQuery(query) {
+export function getEditedQuery(query) {
     let encodedQuery = encodeURI(query);
-    console.log(encodedQuery);
     let url = replaceQueryParam(window.location.href, "q", encodedQuery);
-    window.open(url);
+    return url;
 }
 
 function replaceQueryParam(url, paramName, paramValue) {

@@ -42,16 +42,18 @@ export const importGraylogQuery = (query) => {
             return;
         }
 
-        const parts = trimmedItem.split(":");
+        let fieldValueBreakpoint = trimmedItem.indexOf(":");
+        let fieldPart = trimmedItem.substring(0, fieldValueBreakpoint);
+        let valuePart = trimmedItem.substring(fieldValueBreakpoint + 1);
 
-        if (parts.length !== 2) {
+        if (!valuePart) {
             toast("Invalid query format. Each condition must be in field:value format.");
             return;
         }
 
         itemList.push({
-            field: parts[0].trim(),
-            value: parts[1].trim(),
+            field: fieldPart,
+            value: valuePart,
             condition: condition,
             reversed: isReversed,
         });

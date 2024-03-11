@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./QueryGenerator.css";
 import QueryListItem from "./QueryListItem/QueryListItem";
 import { FaPlus } from "react-icons/fa6";
@@ -8,6 +8,10 @@ import { ToastContainer, toast } from "react-toastify";
 import * as IntegrationScripts from "../../scripts/IntegrationScripts";
 
 function QueryGenerator() {
+    useEffect(() => {
+        importQueryFromUrl();
+    }, []);
+
     let defaultEmptyRowData = { field: "", value: "", condition: "AND", reversed: false, disabled: false };
 
     const [items, setItems] = useState([defaultEmptyRowData]);
@@ -79,7 +83,6 @@ function QueryGenerator() {
             }
         }
 
-        console.log(items);
         return QueryManager.extractGraylogQuery(items);
     };
 
@@ -115,7 +118,8 @@ function QueryGenerator() {
     const pushQueryToUrl = () => {
         let query = extractQueryFromItems();
         if (!query) return;
-        IntegrationScripts.saveToQuery(query);
+        let url = IntegrationScripts.getEditedQuery(query);
+        window.location.href = url;
     };
 
     return (
@@ -133,8 +137,8 @@ function QueryGenerator() {
                     onRemoveItem={removeItem}
                 />
             ))}
-            <div className="list-item-column app-mt-5">
-                <div style={{ display: "flex", justifyContent: "flex-end" }}>
+            <div className="list-item-column app-mt-2" style={{ alignItems: "center" }}>
+                <div style={{ display: "flex", justifyContent: "flex-end", width: "100%" }}>
                     <button data-testid="add-button" onClick={addNewItem} className="custom-button success mx-1">
                         <FaPlus />
                     </button>
@@ -143,17 +147,34 @@ function QueryGenerator() {
                     data-testid="import-query-from-string-button"
                     onClick={importQueryFromString}
                     className="custom-button danger"
+                    style={{ minWidth: "200px" }}
                 >
-                    <FaArrowDown className="app-mr-1" />
-                    Import from string
+                    <div className="list-item-row center">
+                        <FaArrowDown className="app-mr-1" />
+                        Import from string
+                    </div>
                 </button>
-                <button data-testid="import-query-from-url-button" onClick={importQueryFromUrl} className="custom-button danger">
-                    <FaArrowDown className="app-mr-1" />
-                    Import from url
+                <button
+                    data-testid="import-query-from-url-button"
+                    onClick={importQueryFromUrl}
+                    className="custom-button danger"
+                    style={{ minWidth: "200px" }}
+                >
+                    <div className="list-item-row center">
+                        <FaArrowDown className="app-mr-1" />
+                        Import from url
+                    </div>
                 </button>
-                <button data-testid="use-query-button" onClick={pushQueryToUrl} className="custom-button success">
-                    <FaArrowUp className="app-mr-1" />
-                    Use query
+                <button
+                    data-testid="use-query-button"
+                    onClick={pushQueryToUrl}
+                    className="custom-button success"
+                    style={{ minWidth: "200px" }}
+                >
+                    <div className="list-item-row center">
+                        <FaArrowUp className="app-mr-1" />
+                        Use query
+                    </div>
                 </button>
             </div>
         </div>

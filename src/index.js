@@ -5,8 +5,6 @@ import ReactDOM from "react-dom/client";
 
 const InitReact = () => {
     let menuElement = document.querySelector("#main-row .content.row .col-md-12");
-    console.log("menuElement", menuElement);
-
     const newDiv = document.createElement("div");
     newDiv.setAttribute("id", "react-root");
     menuElement.appendChild(newDiv);
@@ -25,9 +23,7 @@ const InitReact = () => {
 };
 
 console.log("Initializing");
-console.log("Script paused for 2 seconds");
 
 setTimeout(() => {
-    console.log("Timeout callback");
     InitReact();
 }, 2000); //todo conditional time

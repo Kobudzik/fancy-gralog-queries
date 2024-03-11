@@ -15,7 +15,7 @@ function App() {
     return (
         <div>
             {/* Floating icon */}
-            <div className="floating-icon mb-3" onClick={toggleContent}>
+            <div className="floating-icon app-mt-5" onClick={toggleContent}>
                 <span style={{ fontFamily: "fantasy" }}>
                     Fancy
                     <span style={{ color: "red" }}> Queries </span>

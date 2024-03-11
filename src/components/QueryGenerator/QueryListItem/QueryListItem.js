@@ -20,7 +20,7 @@ function QueryListItem({
         <div className="list-item-row">
             <button
                 onClick={() => onToggleJoinCondition(index)}
-                className={`custom-button primary ${index === 0 ? "hidden" : "visible"}`}
+                className={`custom-button primary ${index === 0 ? "app-hidden" : "app-visible"}`}
                 title="Condition"
                 disabled={item.disabled}
                 style={{ width: "100px" }}
