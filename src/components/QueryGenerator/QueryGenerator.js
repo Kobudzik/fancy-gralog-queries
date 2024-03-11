@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import "./QueryGenerator.css";
 import QueryListItem from "./QueryListItem/QueryListItem";
 import { FaPlus } from "react-icons/fa6";
@@ -8,8 +8,32 @@ import { toast } from "react-toastify";
 import * as IntegrationScripts from "../../scripts/IntegrationScripts";
 
 function QueryGenerator() {
+    const observer = useRef(null);
     useEffect(() => {
-        importQueryFromUrl();
+        setItemsFromQueryString(IntegrationScripts.loadTextQueryFromGraylogInput());
+
+        const targetNode = document.querySelector(".ace_line");
+        const callback = function (mutationsList, observer) {
+            for (const mutation of mutationsList) {
+                if (mutation.type === "childList" || mutation.type === "characterData") {
+                    console.log("Content changed:", targetNode.textContent);
+                    setItemsFromQueryString(targetNode.textContent, false);
+                }
+            }
+        };
+
+        observer.current = new MutationObserver(callback);
+        const config = {
+            attributes: true,
+            childList: true,
+            subtree: true,
+            characterData: true,
+        };
+        observer.current.observe(targetNode, config);
+
+        return () => {
+            observer.current.disconnect();
+        };
     }, []);
 
     let defaultEmptyRowData = { field: "", value: "", condition: "AND", reversed: false, disabled: false };
@@ -94,31 +118,30 @@ function QueryGenerator() {
             return;
         }
 
-        var itemList = QueryManager.importGraylogQuery(query);
+        var itemList = QueryManager.parseGraylogQueryToItems(query);
 
         if (itemList.length > 0) {
             setItems(itemList);
         }
     };
 
-    const importQueryFromUrl = () => {
-        let query = IntegrationScripts.loadFromQuery();
-
+    const setItemsFromQueryString = (query, shouldValidate = true) => {
         if (!query) {
             toast("There was nothing to import");
             return;
         }
 
-        var itemList = QueryManager.importGraylogQuery(query);
+        var itemList = QueryManager.parseGraylogQueryToItems(query, shouldValidate);
         if (itemList.length > 0) {
             setItems(itemList);
         }
     };
 
-    const pushQueryToUrl = () => {
+    const useQuery = () => {
         let query = extractQueryFromItems();
         if (!query) return;
-        let url = IntegrationScripts.getEditedQuery(query);
+
+        let url = IntegrationScripts.getUrlForQuery(query);
         window.location.href = url;
     };
 
@@ -157,19 +180,8 @@ function QueryGenerator() {
                     </div>
                 </button>
                 <button
-                    data-testid="import-query-from-url-button"
-                    onClick={importQueryFromUrl}
-                    className="custom-button danger"
-                    style={{ minWidth: "200px" }}
-                >
-                    <div className="list-item-row center">
-                        <FaArrowDown className="app-mr-1" />
-                        Import from url
-                    </div>
-                </button>
-                <button
                     data-testid="use-query-button"
-                    onClick={pushQueryToUrl}
+                    onClick={useQuery}
                     className="custom-button success"
                     style={{ minWidth: "200px" }}
                 >

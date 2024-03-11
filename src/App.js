@@ -5,10 +5,8 @@ import { FaAnglesDown, FaAnglesUp } from "react-icons/fa6";
 import { ToastContainer } from "react-toastify";
 
 function App() {
-    // State to manage whether the content is visible or not
     const [showContent, setShowContent] = useState(true);
 
-    // Function to toggle the visibility of the content
     const toggleContent = () => {
         setShowContent((prevState) => !prevState);
     };

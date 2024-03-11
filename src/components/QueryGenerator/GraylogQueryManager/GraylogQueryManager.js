@@ -18,7 +18,7 @@ export const extractGraylogQuery = (items) => {
         }, "");
 };
 
-export const importGraylogQuery = (query) => {
+export const parseGraylogQueryToItems = (query, shouldValidate = true) => {
     const itemList = [];
 
     query.split(/(?=OR|AND)/).forEach((item, index) => {
@@ -38,7 +38,9 @@ export const importGraylogQuery = (query) => {
             condition = "AND";
             trimmedItem = trimmedItem.replace("AND ", "");
         } else if (index !== 0 && condition == null) {
-            toast("Invalid query format, unexpected AND/OR marker.");
+            if (shouldValidate) {
+                toast("Invalid query format, unexpected AND/OR marker.");
+            }
             return;
         }
 
@@ -46,9 +48,11 @@ export const importGraylogQuery = (query) => {
         let fieldPart = trimmedItem.substring(0, fieldValueBreakpoint);
         let valuePart = trimmedItem.substring(fieldValueBreakpoint + 1);
 
-        if (!valuePart) {
+        if (!valuePart && shouldValidate) {
             toast("Invalid query format. Each condition must be in field:value format.");
-            return;
+            if (shouldValidate) {
+                return;
+            }
         }
 
         itemList.push({
