@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { Button } from "react-bootstrap";
 import "./QueryGenerator.css";
 import QueryListItem from "./QueryListItem/QueryListItem";
 import { FaPlus } from "react-icons/fa6";
@@ -120,7 +119,7 @@ function QueryGenerator() {
     };
 
     return (
-        <div className="">
+        <div className="app-mt-2">
             <ToastContainer theme="dark" progressStyle={{ backgroundColor: "#d62518" }} position="bottom-center" />
             {items.map((item, index) => (
                 <QueryListItem
@@ -134,29 +133,28 @@ function QueryGenerator() {
                     onRemoveItem={removeItem}
                 />
             ))}
-            <div style={{ display: "flex", justifyContent: "flex-end" }}>
-                <Button data-testid="add-button" onClick={addNewItem} variant="success" className="mx-1">
-                    <FaPlus />
-                </Button>
-            </div>
-            <div className="d-flex flex-column gap-1 mt-5">
-                <Button data-testid="extract-query-button" onClick={extractQueryFromItems} variant="success">
-                    <FaArrowUp className="mx-1" />
-                    Extract Query
-                </Button>
-                <Button data-testid="import-query-from-stringbutton" onClick={importQueryFromString} variant="danger">
-                    <FaArrowDown className="mx-1" />
+            <div className="list-item-column app-mt-5">
+                <div style={{ display: "flex", justifyContent: "flex-end" }}>
+                    <button data-testid="add-button" onClick={addNewItem} className="custom-button success mx-1">
+                        <FaPlus />
+                    </button>
+                </div>
+                <button
+                    data-testid="import-query-from-string-button"
+                    onClick={importQueryFromString}
+                    className="custom-button danger"
+                >
+                    <FaArrowDown className="app-mr-1" />
                     Import from string
-                </Button>
-
-                <Button data-testid="import-query-from-url-button" onClick={importQueryFromUrl} variant="danger">
-                    <FaArrowDown className="mx-1" />
+                </button>
+                <button data-testid="import-query-from-url-button" onClick={importQueryFromUrl} className="custom-button danger">
+                    <FaArrowDown className="app-mr-1" />
                     Import from url
-                </Button>
-
-                <Button data-testid="import-query-from-url-button" onClick={pushQueryToUrl} variant="success">
+                </button>
+                <button data-testid="use-query-button" onClick={pushQueryToUrl} className="custom-button success">
+                    <FaArrowUp className="app-mr-1" />
                     Use query
-                </Button>
+                </button>
             </div>
         </div>
     );

@@ -1,24 +1,107 @@
-.btn, .form-control {
-    border-radius: 0 !important;
-}
-
-
 $success: #d62518;
 $danger: #343a40;
 $primary: #cecece80;
 $secondary: #2c2c2ca8;
-// $info: #7854e4;
-// $warning: #b8c924;
-// $light: #f8f9fa;
-// $dark: #343a40;
 
-@import '~bootstrap/scss/bootstrap';
-
-:root{
-    --toastify-color-progress-dark: red;
+.list-item-row {
+    display: flex;
+    gap: 0.5rem;
 }
-@import "react-toastify/dist/ReactToastify.css";
 
-.eUsJRX {
-    height: auto !important;
+.flex-centered {
+    display: flex;
+    align-items: center;
+}
+
+.list-item-column {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.custom-button {
+    display: block;
+    line-height: 1.5;
+    font-size: 1rem;
+    border: 1px solid lightgray;
+    padding: 0.375rem 0.75rem;
+    background-color: $primary;
+    color: #fff;
+
+    &.hidden {
+        visibility: hidden;
+    }
+    &.visible {
+        visibility: visible;
+    }
+    &.success {
+        background-color: $success;
+        &:hover {
+            background-color: darken($success, 5%);
+        }
+    }
+    &.danger {
+        background-color: $danger;
+        &:hover {
+            background-color: darken($danger, 5%);
+        }
+    }
+    &.primary {
+        color: #2c2c2ca8;
+        background-color: $primary;
+        &:hover {
+            background-color: darken($primary, 5%);
+        }
+    }
+}
+
+.custom-input-group {
+    display: flex;
+    width: 100%;
+    align-items: center;
+
+    input {
+        display: block;
+        width: 100%;
+        padding: 0.375rem 0.75rem;
+        font-size: 1rem;
+        line-height: 1.5;
+        color: #495057;
+        background-color: #fff;
+        background-clip: padding-box;
+        border: 1px solid #ced4da;
+        border-radius: 0.25rem;
+        transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+        &:focus {
+            color: #495057;
+            background-color: #fff;
+            border-color: #80bdff;
+            outline: 0;
+            box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+        }
+        &::placeholder {
+            color: #6c757d;
+            opacity: 1;
+        }
+    }
+
+    span {
+        padding: 0 0.5rem;
+    }
+}
+
+.app-mr-2 {
+    margin-right: 0.5rem;
+}
+
+.app-mt-2 {
+    margin-top: 0.5rem;
+}
+
+.app-mt-5 {
+    margin-top: 3rem;
+}
+
+.app-mr-1 {
+    margin-right: 0.25rem;
 }

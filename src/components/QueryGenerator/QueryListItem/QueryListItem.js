@@ -1,5 +1,4 @@
 import React from "react";
-import { Button, InputGroup, FormControl } from "react-bootstrap";
 import { BsArrowClockwise } from "react-icons/bs";
 import { IoMdRemove } from "react-icons/io";
 import { LiaToggleOffSolid, LiaToggleOnSolid } from "react-icons/lia";
@@ -18,47 +17,41 @@ function QueryListItem({
     };
 
     return (
-        <div className="list-item eUsJRX">
-            {/* //dummy eusjrx usage to keep this class via purifycss */}
-            <Button
+        <div className="list-item-row">
+            <button
                 onClick={() => onToggleJoinCondition(index)}
-                variant="secondary"
-                className="me-2"
-                style={{ width: "90px", visibility: index === 0 ? "hidden" : "visible", position: "relative" }}
+                className={`custom-button primary ${index === 0 ? "hidden" : "visible"}`}
                 title="Condition"
                 disabled={item.disabled}
+                style={{ width: "100px" }}
             >
                 {item.condition}
                 {generateCircleIcon()}
-            </Button>
-            <Button
+            </button>
+            <button
                 onClick={() => onToggleReverse(index)}
-                variant={item.reversed ? "danger" : "success"}
-                className="me-2"
-                style={{
-                    width: "100px",
-                    position: "relative",
-                }}
+                className={`custom-button ${item.reversed ? "danger" : "success"}`}
                 title="Is reversed"
                 disabled={item.disabled}
+                style={{ width: "110px" }}
             >
                 <span style={{ color: !item.reversed && "darkgray", fontStyle: !item.reversed && "italic" }}>
                     {item.reversed ? "IS NOT" : "IS"}
                 </span>
                 {generateCircleIcon()}
-            </Button>
-            <InputGroup>
-                <FormControl
+            </button>
+            <div className="custom-input-group">
+                <input
                     value={item.field || ""}
                     onChange={(event) => onPropertyChanged("field", index, event)}
                     type="text"
                     placeholder="Field"
                     title="Field"
-                    style={{ maxWidth: "15rem" }}
                     disabled={item.disabled}
+                    style={{ maxWidth: "10rem" }}
                 />
-                <InputGroup.Text>:</InputGroup.Text>
-                <FormControl
+                <span>:</span>
+                <input
                     value={item.value || ""}
                     onChange={(event) => onPropertyChanged("value", index, event)}
                     type="text"
@@ -66,18 +59,17 @@ function QueryListItem({
                     title="Value"
                     disabled={item.disabled}
                 />
-            </InputGroup>
-            <Button onClick={() => onRemoveItem(index)} title="Remove" variant="danger" className="mx-1">
-                <IoMdRemove />
-            </Button>
-            <Button
+            </div>
+            <button
                 onClick={() => onToggleDisable(index)}
                 title="Disable"
-                variant={item.disabled ? "primary" : "danger"}
-                className="mx-1"
+                className={`custom-button ${item.disabled ? "primary" : "danger"} mx-1`}
             >
                 {item.disabled ? <LiaToggleOffSolid /> : <LiaToggleOnSolid />}
-            </Button>
+            </button>
+            <button onClick={() => onRemoveItem(index)} title="Remove" className="custom-button danger mx-1">
+                <IoMdRemove />
+            </button>
         </div>
     );
 }

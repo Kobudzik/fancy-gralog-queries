@@ -1,6 +1,10 @@
 import { extractGraylogQuery, importGraylogQuery } from "./GraylogQueryManager";
 import { toast } from "react-toastify";
 
+jest.mock("react-toastify", () => ({
+    toast: jest.fn(),
+}));
+
 describe("extractGraylogQuery", () => {
     test("returns an empty string when provided with an empty array", () => {
         // Arrange
@@ -101,10 +105,6 @@ describe("extractGraylogQuery", () => {
         expect(result).toBe("field1:value1");
     });
 });
-
-jest.mock("react-toastify", () => ({
-    toast: jest.fn(),
-}));
 
 describe("importGraylogQuery", () => {
     test("returns an empty array when provided with an empty query", () => {

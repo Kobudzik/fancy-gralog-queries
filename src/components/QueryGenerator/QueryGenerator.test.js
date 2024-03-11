@@ -21,8 +21,9 @@ describe("QueryGenerator", () => {
 
     test("renders QueryGenerator component", () => {
         render(<QueryGenerator />);
-        expect(screen.getByText("Extract Query")).toBeInTheDocument();
-        expect(screen.getByText("Import Query")).toBeInTheDocument();
+        expect(screen.getByTestId("import-query-from-url-button")).toBeInTheDocument();
+        expect(screen.getByTestId("import-query-from-string-button")).toBeInTheDocument();
+        expect(screen.getByTestId("use-query-button")).toBeInTheDocument();
     });
 
     test("adds a new item when Add button is clicked", () => {
@@ -57,7 +58,7 @@ describe("QueryGenerator", () => {
         fireEvent.change(screen.getByPlaceholderText("Value"), { target: { value: "testValue" } });
 
         //act
-        fireEvent.click(screen.getByTestId("extract-query-button"));
+        fireEvent.click(screen.getByTestId("use-query-button"));
 
         //assert
         expect(QueryManager.extractGraylogQuery).toHaveBeenCalled();
@@ -66,30 +67,14 @@ describe("QueryGenerator", () => {
     test("extract query- toasts when no enabled rows", () => {
         //arrange
         render(<QueryGenerator />);
-        fireEvent.change(screen.getByPlaceholderText("Field"), { target: { value: "testField" } });
-        fireEvent.change(screen.getByPlaceholderText("Value"), { target: { value: "testValue" } });
 
         //act
+        fireEvent.change(screen.getByPlaceholderText("Field"), { target: { value: "testField" } });
+        fireEvent.change(screen.getByPlaceholderText("Value"), { target: { value: "testValue" } });
         fireEvent.click(screen.getByTitle("Disable"));
-        fireEvent.click(screen.getByTestId("extract-query-button"));
+        fireEvent.click(screen.getByTestId("use-query-button"));
 
         //assert
         expect(toast).toHaveBeenCalledWith("There are zero enabled rows!");
-    });
-
-    test("imports query when Import Query button is clicked", () => {
-        // Arrange
-        const importQueryMock = jest.spyOn(QueryManager, "importGraylogQuery");
-        importQueryMock.mockReturnValue([]);
-
-        jest.spyOn(window, "prompt").mockReturnValue("val");
-
-        render(<QueryGenerator />);
-
-        // Act
-        fireEvent.click(screen.getByText("Import Query"));
-
-        // Assert
-        expect(importQueryMock).toHaveBeenCalled();
     });
 });
