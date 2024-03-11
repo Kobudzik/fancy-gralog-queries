@@ -159,7 +159,7 @@ function QueryGenerator() {
     const appendDisabledItemsFromStore = () => {
         let disabledFilters = DisabledFiltersManager.getDisabledFilters();
         if (disabledFilters) {
-            setItems(items.concat(disabledFilters));
+            setItems((oldItems) => oldItems.concat(disabledFilters));
         }
     };
 
