@@ -1,7 +1,7 @@
 import * as LocalStorageManager from "./localStorageManager";
 
 export function setDisabledFilter(item) {
-    let items = this.getDisabledFilters();
+    let items = getDisabledFilters();
     if (items) {
         let existingItemIndex = items.findIndex((x) => x.id === item.id);
         if (existingItemIndex > -1) {
@@ -17,7 +17,11 @@ export function setDisabledFilter(item) {
 }
 
 export function removeDisabledFilter(item) {
-    let items = this.getDisabledFilters();
+    let items = getDisabledFilters();
+    if (!items) {
+        return;
+    }
+
     let existingItemIndex = items.findIndex((x) => x.id === item.id);
     if (existingItemIndex > -1) {
         items.splice(existingItemIndex, 1);

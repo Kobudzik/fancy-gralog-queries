@@ -18,7 +18,6 @@ function QueryGenerator() {
         const callback = function (mutationsList, observer) {
             for (const mutation of mutationsList) {
                 if (mutation.type === "childList" || mutation.type === "characterData") {
-                    console.log("Content changed:", targetNode.textContent);
                     filItems(targetNode.textContent);
                 }
             }
@@ -49,7 +48,7 @@ function QueryGenerator() {
         };
     };
 
-    const [items, setItems] = useState([getDefaultEmptyRowData()]);
+    const [items, setItems] = useState([]);
 
     const addNewItem = () => {
         if (items.length === 0) {
@@ -111,9 +110,9 @@ function QueryGenerator() {
     };
 
     const extractQueryFromItems = () => {
-        if (items.filter((x) => !x.disabled).length === 0) {
-            toast("There are zero enabled rows!");
-        }
+        // if (items.filter((x) => !x.disabled).length === 0) {
+        //     toast("There are zero enabled rows!");
+        // }
 
         for (const item of items) {
             if (!item.field || !item.value) {
@@ -166,8 +165,6 @@ function QueryGenerator() {
 
     const useQuery = () => {
         let query = extractQueryFromItems();
-        if (!query) return;
-
         let url = IntegrationScripts.getUrlForQuery(query);
         window.location.href = url;
     };
@@ -191,7 +188,7 @@ function QueryGenerator() {
 
             <div className="list-item-column app-mt-2" style={{ alignItems: "center" }}>
                 <div style={{ display: "flex", justifyContent: "flex-end", width: "100%" }}>
-                    <button data-testid="add-button" onClick={addNewItem} className="custom-button success mx-1">
+                    <button data-testid="add-button" onClick={addNewItem} className="custom-button success mx-1" title="Add">
                         <FaPlus />
                     </button>
                 </div>
