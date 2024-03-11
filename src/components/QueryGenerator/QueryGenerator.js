@@ -6,18 +6,20 @@ import { FaArrowUp, FaArrowDown } from "react-icons/fa";
 import * as QueryManager from "./GraylogQueryManager/GraylogQueryManager";
 import { toast } from "react-toastify";
 import * as IntegrationScripts from "../../scripts/IntegrationScripts";
+import GenerateGuid from "../../scripts/guidHelper";
+import * as DisabledFiltersManager from "../../scripts/disabledFiltersManager";
 
 function QueryGenerator() {
     const observer = useRef(null);
     useEffect(() => {
-        setItemsFromQueryString(IntegrationScripts.loadTextQueryFromGraylogInput());
+        filItems(IntegrationScripts.loadTextQueryFromGraylogInput());
 
         const targetNode = document.querySelector(".ace_line");
         const callback = function (mutationsList, observer) {
             for (const mutation of mutationsList) {
                 if (mutation.type === "childList" || mutation.type === "characterData") {
                     console.log("Content changed:", targetNode.textContent);
-                    setItemsFromQueryString(targetNode.textContent, false);
+                    filItems(targetNode.textContent);
                 }
             }
         };
@@ -36,13 +38,22 @@ function QueryGenerator() {
         };
     }, []);
 
-    let defaultEmptyRowData = { field: "", value: "", condition: "AND", reversed: false, disabled: false };
+    const getDefaultEmptyRowData = () => {
+        return {
+            field: "",
+            value: "",
+            condition: "AND",
+            reversed: false,
+            disabled: false,
+            id: GenerateGuid(),
+        };
+    };
 
-    const [items, setItems] = useState([defaultEmptyRowData]);
+    const [items, setItems] = useState([getDefaultEmptyRowData()]);
 
     const addNewItem = () => {
         if (items.length === 0) {
-            setItems([defaultEmptyRowData]);
+            setItems([getDefaultEmptyRowData()]);
             return;
         }
 
@@ -53,7 +64,7 @@ function QueryGenerator() {
             return;
         }
 
-        setItems([...items, defaultEmptyRowData]);
+        setItems([...items, getDefaultEmptyRowData()]);
     };
 
     const handlePropertyValueChange = (property, index, event) => {
@@ -87,9 +98,13 @@ function QueryGenerator() {
         const updatedItems = [...items];
         updatedItems[index].disabled = !updatedItems[index].disabled;
         setItems(updatedItems);
+
+        DisabledFiltersManager.setDisabledFilter(items[index]);
     };
 
     const removeItem = (index) => {
+        DisabledFiltersManager.removeDisabledFilter(items[index]);
+
         const updatedItems = [...items];
         updatedItems.splice(index, 1);
         setItems(updatedItems);
@@ -125,15 +140,27 @@ function QueryGenerator() {
         }
     };
 
-    const setItemsFromQueryString = (query, shouldValidate = true) => {
+    const filItems = (query) => {
+        setItemsFromQueryString(query);
+        appendDisabledItemsFromStore();
+    };
+
+    const setItemsFromQueryString = (query) => {
         if (!query) {
-            toast("There was nothing to import");
+            // toast("There was nothing to import");
             return;
         }
 
-        var itemList = QueryManager.parseGraylogQueryToItems(query, shouldValidate);
+        var itemList = QueryManager.parseGraylogQueryToItems(query, false);
         if (itemList.length > 0) {
             setItems(itemList);
+        }
+    };
+
+    const appendDisabledItemsFromStore = () => {
+        let disabledFilters = DisabledFiltersManager.getDisabledFilters();
+        if (disabledFilters) {
+            setItems(items.concat(disabledFilters));
         }
     };
 

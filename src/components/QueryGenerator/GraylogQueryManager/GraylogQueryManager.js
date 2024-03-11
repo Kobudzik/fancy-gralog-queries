@@ -1,5 +1,6 @@
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import GenerateGuid from "../../../scripts/guidHelper";
 
 export const extractGraylogQuery = (items) => {
     return items
@@ -60,6 +61,7 @@ export const parseGraylogQueryToItems = (query, shouldValidate = true) => {
             value: valuePart,
             condition: condition,
             reversed: isReversed,
+            id: GenerateGuid(),
         });
     });
 
