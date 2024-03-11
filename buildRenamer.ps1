@@ -13,20 +13,22 @@ function Rename-MainFiles {
 
         # Rename the .js file
         Rename-Item -Path $JsFile.FullName -NewName $NewJsFileName
+        # Remove-Item -Path $JsFile.FullName
     }
 
     # Get all .css files matching the pattern
     $CssFiles = Get-ChildItem -Path $FolderPath -Filter "main.*.css"
 
     foreach ($CssFile in $CssFiles) {
-        # Build the new filename for .css files
-        $NewCssFileName = "$($CssFile.DirectoryName)\main.css"
+        # # Build the new filename for .css files
+        # $NewCssFileName = "$($CssFile.DirectoryName)\main.css"
 
-        # Rename the .css file
-        Rename-Item -Path $CssFile.FullName -NewName $NewCssFileName
+        # # Rename the .css file
+        # Rename-Item -Path $CssFile.FullName -NewName $NewCssFileName
+        Remove-Item -Path $CssFile.FullName
     }
 }
 
 # Example usage:
-# Rename-MainFiles -FolderPath "./build/static/css"
+Rename-MainFiles -FolderPath "./build/static/css"
 Rename-MainFiles -FolderPath "./build/static/js"

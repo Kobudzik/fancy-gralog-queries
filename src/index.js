@@ -22,7 +22,7 @@ const InitReact = () => {
     );
 };
 
-console.log("Initializing");
+console.log("Initializing Fancy Queries...");
 
 setTimeout(() => {
     InitReact();

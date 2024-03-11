@@ -2,6 +2,7 @@ import React from "react";
 import { BsArrowClockwise } from "react-icons/bs";
 import { IoMdRemove } from "react-icons/io";
 import { LiaToggleOffSolid, LiaToggleOnSolid } from "react-icons/lia";
+import TextareaAutosize from "react-textarea-autosize";
 
 function QueryListItem({
     item,
@@ -13,11 +14,11 @@ function QueryListItem({
     onToggleDisable,
 }) {
     let generateCircleIcon = () => {
-        return <BsArrowClockwise style={{ position: "absolute", top: 0, right: 0, fontSize: "0.8em" }} size={12} />;
+        return <BsArrowClockwise style={{ position: "absolute", top: 2, right: 2, fontSize: "0.8em" }} size={12} />;
     };
 
     return (
-        <div className="list-item-row">
+        <div className="list-item-row start">
             <button
                 onClick={() => onToggleJoinCondition(index)}
                 className={`custom-button primary ${index === 0 ? "app-hidden" : "app-visible"}`}
@@ -51,13 +52,15 @@ function QueryListItem({
                     style={{ maxWidth: "10rem" }}
                 />
                 <span>:</span>
-                <input
+                <TextareaAutosize
                     value={item.value || ""}
                     onChange={(event) => onPropertyChanged("value", index, event)}
-                    type="text"
+                    type="textarea"
                     placeholder="Value"
                     title="Value"
                     disabled={item.disabled}
+                    style={{ width: "100%", resize: "vertical" }}
+                    maxRows={10}
                 />
             </div>
             <button

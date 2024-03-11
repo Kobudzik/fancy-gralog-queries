@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "./App.scss";
 import QueryGenerator from "./components/QueryGenerator/QueryGenerator.js";
 import { FaAnglesDown, FaAnglesUp } from "react-icons/fa6";
+import { ToastContainer } from "react-toastify";
 
 function App() {
     // State to manage whether the content is visible or not
@@ -14,6 +15,7 @@ function App() {
 
     return (
         <div>
+            <ToastContainer theme="dark" progressStyle={{ backgroundColor: "#d62518" }} position="bottom-center" />
             {/* Floating icon */}
             <div className="floating-icon app-mt-5" onClick={toggleContent}>
                 <span style={{ fontFamily: "fantasy" }}>

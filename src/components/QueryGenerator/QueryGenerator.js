@@ -4,7 +4,7 @@ import QueryListItem from "./QueryListItem/QueryListItem";
 import { FaPlus } from "react-icons/fa6";
 import { FaArrowUp, FaArrowDown } from "react-icons/fa";
 import * as QueryManager from "./GraylogQueryManager/GraylogQueryManager";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import * as IntegrationScripts from "../../scripts/IntegrationScripts";
 
 function QueryGenerator() {
@@ -124,19 +124,21 @@ function QueryGenerator() {
 
     return (
         <div className="app-mt-2">
-            <ToastContainer theme="dark" progressStyle={{ backgroundColor: "#d62518" }} position="bottom-center" />
-            {items.map((item, index) => (
-                <QueryListItem
-                    key={index}
-                    item={item}
-                    index={index}
-                    onPropertyChanged={handlePropertyValueChange}
-                    onToggleJoinCondition={toggleJoinCondition}
-                    onToggleReverse={toggleReverse}
-                    onToggleDisable={toggleDisable}
-                    onRemoveItem={removeItem}
-                />
-            ))}
+            <div className="list-item-column">
+                {items.map((item, index) => (
+                    <QueryListItem
+                        key={index}
+                        item={item}
+                        index={index}
+                        onPropertyChanged={handlePropertyValueChange}
+                        onToggleJoinCondition={toggleJoinCondition}
+                        onToggleReverse={toggleReverse}
+                        onToggleDisable={toggleDisable}
+                        onRemoveItem={removeItem}
+                    />
+                ))}
+            </div>
+
             <div className="list-item-column app-mt-2" style={{ alignItems: "center" }}>
                 <div style={{ display: "flex", justifyContent: "flex-end", width: "100%" }}>
                     <button data-testid="add-button" onClick={addNewItem} className="custom-button success mx-1">
