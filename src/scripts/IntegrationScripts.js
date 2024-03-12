@@ -11,15 +11,18 @@ export function setGraylogInput(input) {
 }
 
 export function getUrlForQuery(query) {
-    let encodedQuery = encodeURI(query);
-    let url = replaceQueryParam(window.location.href, "q", encodedQuery ?? null);
-    return url;
+    if (query) {
+        let encodedQuery = encodeURI(query);
+        return replaceQueryParam(window.location.href, "q", encodedQuery);
+    }
+    return replaceQueryParam(window.location.href, "q", "");
 }
 
 function replaceQueryParam(url, paramName, paramValue) {
     const pattern = new RegExp("(" + paramName + "=)([^&]*)");
     if (url.search(pattern) >= 0) {
         return url.replace(pattern, "$1" + paramValue);
+    } else {
+        return url + (url.indexOf("?") > 0 ? "&" : "?") + paramName + "=" + paramValue;
     }
-    return url + (url.indexOf("?") > 0 ? "&" : "?") + paramName + "=" + paramValue;
 }

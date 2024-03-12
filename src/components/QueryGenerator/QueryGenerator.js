@@ -11,6 +11,7 @@ import * as DisabledFiltersManager from "../../scripts/disabledFiltersManager";
 
 function QueryGenerator() {
     const observer = useRef(null);
+
     useEffect(() => {
         filItems(IntegrationScripts.loadTextQueryFromGraylogInput());
 
@@ -35,7 +36,7 @@ function QueryGenerator() {
         return () => {
             observer.current.disconnect();
         };
-    }, []);
+    });
 
     const getDefaultEmptyRowData = () => {
         return {

@@ -4,15 +4,11 @@ import App from "./App";
 import ReactDOM from "react-dom/client";
 
 const InitReact = () => {
-    let menuElement = document.querySelector("#main-row .content.row .col-md-12");
+    let menuElement = waitForRoot();
+
     const newDiv = document.createElement("div");
     newDiv.setAttribute("id", "react-root");
     menuElement.appendChild(newDiv);
-
-    // const body = document.querySelector("body");
-    // const app = document.createElement("div");
-    // app.id = "react-root";
-    // body.prepend(app);
 
     const root = ReactDOM.createRoot(document.getElementById("react-root"));
     root.render(
@@ -22,8 +18,27 @@ const InitReact = () => {
     );
 };
 
-console.log("Initializing Fancy Queries...");
+//wait for div
 
-setTimeout(() => {
-    InitReact();
-}, 2000); //todo conditional time
+function waitForRoot() {
+    const MaxRetries = 20;
+    let retires = 0;
+    for (let i = 0; i < MaxRetries; i++) {
+        let menuElement = document.querySelector("#main-row .content.row .col-md-12");
+
+        if (!menuElement) {
+            retires++;
+        } else {
+            return menuElement;
+        }
+
+        setTimeout(() => {}, 100);
+
+        if (retires >= MaxRetries) {
+            throw new Error("Failed to wait for roort");
+        }
+    }
+}
+
+console.log("Initializing Fancy Queries...");
+InitReact();

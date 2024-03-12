@@ -21,8 +21,13 @@ export const extractGraylogQuery = (items) => {
 
 export const parseGraylogQueryToItems = (query, shouldValidate = true) => {
     const itemList = [];
+    if (query.startsWith("AND") || query.startsWith("OR")) {
+        return;
+    }
 
-    query.split(/(?=OR|AND)/).forEach((item, index) => {
+    // Split the string by "OR" or "AND" but not within parentheses
+    query.split(/\s+(?=AND(?![^(]*\))|OR(?![^(]*\)))/).forEach((item, index) => {
+        console.log(item);
         let condition = null;
         let isReversed = false;
 
@@ -32,12 +37,15 @@ export const parseGraylogQueryToItems = (query, shouldValidate = true) => {
             trimmedItem = trimmedItem.replace("NOT ", "");
         }
 
-        if (trimmedItem.indexOf("OR ") > -1) {
+        let orIndex = indexOfValueNotInParentheses(trimmedItem, "OR");
+        let andIndex = indexOfValueNotInParentheses(trimmedItem, "AND");
+
+        if (orIndex > -1) {
             condition = "OR";
-            trimmedItem = trimmedItem.replace("OR ", "");
-        } else if (trimmedItem.indexOf("AND ") > -1) {
+            trimmedItem = removeSubstring(trimmedItem, orIndex, 2).trim();
+        } else if (andIndex > -1) {
             condition = "AND";
-            trimmedItem = trimmedItem.replace("AND ", "");
+            trimmedItem = removeSubstring(trimmedItem, andIndex, 3).trim();
         } else if (index !== 0 && condition == null) {
             if (shouldValidate) {
                 toast("Invalid query format, unexpected AND/OR marker.");
@@ -67,3 +75,23 @@ export const parseGraylogQueryToItems = (query, shouldValidate = true) => {
 
     return itemList;
 };
+
+function indexOfValueNotInParentheses(inputString, value) {
+    let isInParentheses = 0;
+
+    for (let i = 0; i < inputString.length; i++) {
+        if (inputString[i] === "(") {
+            isInParentheses++;
+        } else if (inputString[i] === ")") {
+            isInParentheses--;
+        } else if (inputString.substring(i, i + value.length) === value && isInParentheses === 0) {
+            return i;
+        }
+    }
+
+    return -1; // Return -1 if "OR" not found outside parentheses
+}
+
+function removeSubstring(str, startIndex, endIndex) {
+    return str.substring(0, startIndex) + str.substring(endIndex);
+}

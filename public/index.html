@@ -19,14 +19,31 @@
     <div class="content row">
       <div class="col-md-12">
         graylog query:
-        <input class="ace_line"></input>
+        <input id="textInput"
+               class="ace_line"></input>
       </div>
     </div>
   </div>
 </body>
 
 <script>
-  // document.querySelector(".ace_line").textContent = "text:abc678"
+  function loadTextQueryFromUrl() {
+    return new URL(window.location.href).searchParams.get("q");
+  }
+
+  let textContainer = document.querySelector('.ace_line');
+
+  let devInputElement = document.getElementById('textInput');
+
+  if (devInputElement) {
+    textContainer.value = loadTextQueryFromUrl();
+    textContainer.textContent = loadTextQueryFromUrl();
+
+    devInputElement.addEventListener('input', function (event) {
+      textContainer.textContent = event.target.value;
+    });
+  }
+
 </script>
 
 </html>
