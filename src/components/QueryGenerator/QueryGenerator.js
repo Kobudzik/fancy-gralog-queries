@@ -36,7 +36,7 @@ function QueryGenerator() {
         return () => {
             observer.current.disconnect();
         };
-    });
+    }, []);
 
     const getDefaultEmptyRowData = () => {
         return {

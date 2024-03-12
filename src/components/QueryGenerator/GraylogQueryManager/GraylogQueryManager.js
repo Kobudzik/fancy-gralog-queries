@@ -27,7 +27,6 @@ export const parseGraylogQueryToItems = (query, shouldValidate = true) => {
 
     // Split the string by "OR" or "AND" but not within parentheses
     query.split(/\s+(?=AND(?![^(]*\))|OR(?![^(]*\)))/).forEach((item, index) => {
-        console.log(item);
         let condition = null;
         let isReversed = false;
 

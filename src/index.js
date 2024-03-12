@@ -3,8 +3,8 @@ import "./index.css";
 import App from "./App";
 import ReactDOM from "react-dom/client";
 
-const InitReact = () => {
-    let menuElement = waitForRoot();
+const InitReact = async () => {
+    let menuElement = await waitForRoot();
 
     const newDiv = document.createElement("div");
     newDiv.setAttribute("id", "react-root");
@@ -18,10 +18,8 @@ const InitReact = () => {
     );
 };
 
-//wait for div
-
-function waitForRoot() {
-    const MaxRetries = 20;
+async function waitForRoot() {
+    const MaxRetries = 40;
     let retires = 0;
     for (let i = 0; i < MaxRetries; i++) {
         let menuElement = document.querySelector("#main-row .content.row .col-md-12");
@@ -31,14 +29,17 @@ function waitForRoot() {
         } else {
             return menuElement;
         }
-
-        setTimeout(() => {}, 100);
+        await sleep(1000);
 
         if (retires >= MaxRetries) {
-            throw new Error("Failed to wait for roort");
+            throw new Error("Failed to wait for root element");
         }
     }
 }
 
+function sleep(ms) {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
 console.log("Initializing Fancy Queries...");
-InitReact();
+await InitReact();

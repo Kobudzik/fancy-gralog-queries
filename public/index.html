@@ -32,10 +32,9 @@
   }
 
   let textContainer = document.querySelector('.ace_line');
-
   let devInputElement = document.getElementById('textInput');
 
-  if (devInputElement) {
+  if (devInputElement && textContainer) {
     textContainer.value = loadTextQueryFromUrl();
     textContainer.textContent = loadTextQueryFromUrl();
 
