@@ -20,9 +20,11 @@
     },
     "scripts": {
         "start": "react-scripts start",
-        "build": "react-scripts build && npm run purify-build-css && powershell.exe -ExecutionPolicy Bypass -File buildRenamer.ps1",
-        "simple-build": "react-scripts build",
+        "remove-build-trash": "powershell.exe -ExecutionPolicy Bypass Remove-Item -Path './build/index.html' && powershell.exe -ExecutionPolicy Bypass Remove-Item -Path './build/asset-manifest.json'",
+        "build-renamer": "powershell.exe -ExecutionPolicy Bypass -File buildRenamer.ps1",
         "purify-build-css": "node ./node_modules/purify-css/bin/purifycss build/static/js/*.js build/static/css/*.css --out build/static/css/main.css --min true",
+        "build": "react-scripts build && npm run purify-build-css && npm run remove-build-trash && npm run build-renamer",
+        "simple-build": "react-scripts build",
         "test": "react-scripts test",
         "eject": "react-scripts eject",
         "analyze": "source-map-explorer build/static/js/main.*"

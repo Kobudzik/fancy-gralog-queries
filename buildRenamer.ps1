@@ -25,6 +25,8 @@ function Rename-MainFiles {
 
         # # Rename the .css file
         # Rename-Item -Path $CssFile.FullName -NewName $NewCssFileName
+
+        #renaming is disabled as main.css is created by css-purifier, just remove the old one
         Remove-Item -Path $CssFile.FullName
     }
 }
