@@ -31,14 +31,12 @@ function QueryListItem({
             </button>
             <button
                 onClick={() => onToggleReverse(index)}
-                className={`custom-button ${item.reversed ? "danger" : "success"}`}
+                className={`custom-button ${item.reversed ? "success" : "danger"}`}
                 title="Is reversed"
                 disabled={item.disabled}
-                style={{ width: "110px" }}
+                style={{ minWidth: "90px" }}
             >
-                <span style={{ color: !item.reversed && "darkgray", fontStyle: !item.reversed && "italic" }}>
-                    {item.reversed ? "IS NOT" : "IS"}
-                </span>
+                <span style={{ fontStyle: !item.reversed && "italic" }}>{item.reversed ? "IS NOT" : "IS"}</span>
                 {generateCircleIcon()}
             </button>
             <div className="custom-input-group">
@@ -49,7 +47,7 @@ function QueryListItem({
                     placeholder="Field"
                     title="Field"
                     disabled={item.disabled}
-                    style={{ maxWidth: "10rem" }}
+                    style={{ maxWidth: "14rem", fontWeight: "bold" }}
                 />
                 <span className="centered">:</span>
                 <TextareaAutosize

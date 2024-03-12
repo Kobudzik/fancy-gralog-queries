@@ -12,7 +12,7 @@ export function setGraylogInput(input) {
 
 export function getUrlForQuery(query) {
     let encodedQuery = encodeURI(query);
-    let url = replaceQueryParam(window.location.href, "q", encodedQuery);
+    let url = replaceQueryParam(window.location.href, "q", encodedQuery ?? null);
     return url;
 }
 

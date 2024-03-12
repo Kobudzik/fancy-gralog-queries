@@ -94,11 +94,18 @@ function QueryGenerator() {
     };
 
     const toggleDisable = (index) => {
+        let isUserDisabling = !items[index].disabled;
+        if (!isUserDisabling) {
+            DisabledFiltersManager.removeDisabledFilter(items[index]);
+        }
+
         const updatedItems = [...items];
         updatedItems[index].disabled = !updatedItems[index].disabled;
         setItems(updatedItems);
 
-        DisabledFiltersManager.setDisabledFilter(items[index]);
+        if (isUserDisabling) {
+            DisabledFiltersManager.setDisabledFilter(items[index]);
+        }
     };
 
     const removeItem = (index) => {
@@ -140,6 +147,7 @@ function QueryGenerator() {
     };
 
     const filItems = (query) => {
+        setItems([]);
         setItemsFromQueryString(query);
         appendDisabledItemsFromStore();
     };
@@ -159,7 +167,7 @@ function QueryGenerator() {
     const appendDisabledItemsFromStore = () => {
         let disabledFilters = DisabledFiltersManager.getDisabledFilters();
         if (disabledFilters) {
-            setItems((oldItems) => oldItems.concat(disabledFilters));
+            setItems((oldItems) => (oldItems ? oldItems.concat(disabledFilters) : disabledFilters));
         }
     };
 

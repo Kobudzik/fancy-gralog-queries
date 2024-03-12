@@ -3,6 +3,9 @@ $danger: #343a40;
 $primary: #cecece80;
 $secondary: #2c2c2ca8;
 
+.body {
+    font-size: 1rem;
+}
 span.centered {
     margin-top: auto;
     margin-bottom: auto;
@@ -86,6 +89,10 @@ span.centered {
     background-color: $primary;
     color: #fff;
 
+    svg {
+        vertical-align: middle;
+    }
+
     &.app-hidden {
         visibility: hidden;
     }
@@ -105,12 +112,13 @@ span.centered {
     }
     &.danger {
         background-color: $danger;
+        color: white !important;
         &:hover {
             background-color: darken($danger, 5%);
         }
     }
     &.primary {
-        color: #2c2c2ca8;
+        color: black;
         background-color: $primary;
         &:hover {
             background-color: darken($primary, 5%);
@@ -137,5 +145,7 @@ span.centered {
 
     &content {
         padding: 2rem;
+        min-width: 600px;
+        overflow: auto;
     }
 }
