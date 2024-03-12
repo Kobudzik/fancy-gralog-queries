@@ -58,11 +58,11 @@ function QueryGenerator() {
         }
 
         //validate if can add
-        const lastItem = items[items.length - 1];
-        if (!lastItem.field || !lastItem.value) {
-            toast("Please fill in the previous row before adding a new one.");
-            return;
-        }
+        // const lastItem = items[items.length - 1];
+        // if (!lastItem.field || !lastItem.value) {
+        //     toast("Please fill in the previous row before adding a new one.");
+        //     return;
+        // }
 
         setItems([...items, getDefaultEmptyRowData()]);
     };
@@ -122,12 +122,12 @@ function QueryGenerator() {
         //     toast("There are zero enabled rows!");
         // }
 
-        for (const item of items) {
-            if (!item.field || !item.value) {
-                toast("Please fill in all fields before extracting data.");
-                return;
-            }
-        }
+        // for (const item of items) {
+        //     if (!item.field || !item.value) {
+        //         toast("Please fill in all fields before extracting data.");
+        //         return;
+        //     }
+        // }
 
         return QueryManager.extractGraylogQuery(items);
     };

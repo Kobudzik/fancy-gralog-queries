@@ -15,6 +15,10 @@ export const extractGraylogQuery = (items) => {
                 result += "NOT ";
             }
 
+            if (!item.field) {
+                return result + item.value;
+            }
+
             return result + `${item.field}:${item.value}`;
         }, "");
 };
