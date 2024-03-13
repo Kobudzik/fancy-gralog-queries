@@ -13,7 +13,6 @@ function Rename-MainFiles {
 
         # Rename the .js file
         Rename-Item -Path $JsFile.FullName -NewName $NewJsFileName
-        # Remove-Item -Path $JsFile.FullName
     }
 
     # Get all .css files matching the pattern
@@ -26,11 +25,10 @@ function Rename-MainFiles {
         # # Rename the .css file
         # Rename-Item -Path $CssFile.FullName -NewName $NewCssFileName
 
-        #renaming is disabled as main.css is created by css-purifier, just remove the old one
+        #renaming is disabled as main.css is created by css-purifier, just remove the old one!
         Remove-Item -Path $CssFile.FullName
     }
 }
 
-# Example usage:
 Rename-MainFiles -FolderPath "./build/static/css"
 Rename-MainFiles -FolderPath "./build/static/js"

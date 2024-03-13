@@ -4,10 +4,11 @@ import App from "./App";
 import ReactDOM from "react-dom/client";
 
 const InitReact = async () => {
-    let menuElement = await waitForRoot();
+    let menuElement = await getAwaitedRow();
 
     const newDiv = document.createElement("div");
     newDiv.setAttribute("id", "react-root");
+
     menuElement.appendChild(newDiv);
 
     const root = ReactDOM.createRoot(document.getElementById("react-root"));
@@ -18,9 +19,10 @@ const InitReact = async () => {
     );
 };
 
-async function waitForRoot() {
+async function getAwaitedRow() {
     const MaxRetries = 40;
     let retires = 0;
+
     for (let i = 0; i < MaxRetries; i++) {
         let menuElement = document.querySelector("#main-row .content.row .col-md-12");
 
@@ -29,6 +31,7 @@ async function waitForRoot() {
         } else {
             return menuElement;
         }
+
         await sleep(1000);
 
         if (retires >= MaxRetries) {
